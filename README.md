@@ -1,6 +1,6 @@
 # grunt-captain
 
-> Static site generator for prototyping frontend projects.
+> Static site generator for prototyping front-end projects
 
 ## Getting Started
 This plugin requires Grunt.
@@ -37,17 +37,12 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.data
+Type: `Object`
+Default value: `{}`
 
-A string value that is used to do something with whatever.
+A global data object which is passed to all page templates.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
 
 ### Usage Examples
 
@@ -57,11 +52,17 @@ In this example, the default options are used to do something with whatever. So 
 ```js
 grunt.initConfig({
   captain: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    compile: {
+      files: [{
+        expand: true, // Enable dynamic expansion.
+        cwd: 'tpl/page/', // Src matches are relative to this path.
+        src: ['*.swig'], // Actual pattern(s) to match.
+        dest: 'www/', // Destination path prefix.
+        ext: '.html', // Dest filepaths will have this extension.
+        extDot: 'first' // Extensions in filenames begin after the first dot
+      }]
+    }
+  }
 })
 ```
 
@@ -72,13 +73,21 @@ In this example, custom options are used to do something else with whatever else
 grunt.initConfig({
   captain: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      data: {
+          env: {
+              dev: true
+          }
+      }
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    files: [{
+      expand: true, // Enable dynamic expansion.
+      cwd: 'tpl/page/', // Src matches are relative to this path.
+      src: ['*.swig'], // Actual pattern(s) to match.
+      dest: 'www/', // Destination path prefix.
+      ext: '.html', // Dest filepaths will have this extension.
+      extDot: 'first' // Extensions in filenames begin after the first dot
+    }]
+  }
 })
 ```
 
