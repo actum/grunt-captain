@@ -2,11 +2,11 @@
   "name": "grunt-captain",
   "version": "0.0.1",
   "description": "Static site generator for prototyping front-end projects",
-  "repository": "",
+  "repository": "actum/grunt-captain",
   "author": {
     "name": "Jan Panschab",
     "email": "jan.panschab@actum.cz",
-    "url": "http://www.actum.cz"
+    "url": "http://www.actum.cz/"
   },
   "keywords": [
     "gruntplugin",
