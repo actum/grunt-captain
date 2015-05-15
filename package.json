@@ -1,6 +1,6 @@
 {
   "name": "grunt-captain",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Static site generator for prototyping front-end projects",
   "repository": "actum/grunt-captain",
   "author": {
