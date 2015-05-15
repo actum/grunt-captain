@@ -47,7 +47,7 @@ A global data object which is passed to all page templates.
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example, `.swig` templates from `tpl/page/` are compiled to `.html` files.
 
 ```js
 grunt.initConfig({
@@ -67,7 +67,7 @@ grunt.initConfig({
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+In this example, we set global data option `env.dev` for differences between production and development build.
 
 ```js
 grunt.initConfig({
