@@ -1,0 +1,30 @@
+{
+  "name": "grunt-captain",
+  "version": "0.0.1",
+  "description": "Static site generator for prototyping frontend projects.",
+  "repository": "",
+  "author": {
+    "name": "Jan Panschab",
+    "email": "jan.panschab@actum.cz",
+    "url": "http://www.actum.cz"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.2"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "json5": "^0.4.0",
+    "lodash": "^3.8.0",
+    "swig": "^1.4.2"
+  }
+}
