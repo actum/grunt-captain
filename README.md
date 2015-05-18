@@ -2,6 +2,36 @@
 
 > Static site generator for prototyping front-end projects
 
+## How it works
+Captain uses [Swig](http://paularmstrong.github.io/swig/) as a template engine and adds some SSG functionality. You can pass data to the template directly from template with JSON front matter syntax or from global grunt config.
+
+```html
+{{{
+    title: 'Homepage',
+    homepage: true
+}}}
+
+<h1>{{ title }}</h1>
+{% if homepage %}
+<p>This is homepage</p>
+{% endif %}
+```
+
+More about swig templates in [documentation](http://paularmstrong.github.io/swig/docs/).
+
+You can also import data from JSON file:
+
+```html
+require('../data/require-data.json');
+
+<h1>{{ title }}</h1>
+{% if homepage %}
+<p>This is homepage</p>
+{% endif %}
+```
+
+All JSON data are parsed with [JSON5](http://json5.org/) package so you can use features like unquoted keys, strings can be single-quoted, objects and arrays can have trailing commas, comments.
+
 ## Getting Started
 This plugin requires Grunt.
 
@@ -18,28 +48,15 @@ grunt.loadNpmTasks('grunt-captain');
 ```
 
 ## The "captain" task
+_Run this task with the `grunt catain` command._
 
-### Overview
-In your project's Gruntfile, add a section named `captain` to the data object passed into `grunt.initConfig()`.
-
-```js
-grunt.initConfig({
-  captain: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-})
-```
+Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically) guide.
 
 ### Options
 
-#### options.data
+#### data
 Type: `Object`
-Default value: `{}`
+Default: `{}`
 
 A global data object which is passed to all page templates.
 
@@ -91,11 +108,12 @@ grunt.initConfig({
 })
 ```
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
 ## Release History
 * 2015-05-15    0.1.1   replace lodash dependency with lodash.merge
+
+---
+
+Task submitted by [Jan Panschab](https://github.com/janpanschab)
 
 ## License
 Copyright (c) 2015 Jan Panschab. Licensed under the MIT license.
