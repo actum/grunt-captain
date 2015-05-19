@@ -6,7 +6,7 @@
 </ul>
 
 <ul>
-    {% for href in $.pages %}
-    <li><a href="{{href}}">{{href}}</a></li>
+    {% for path in $.pages %}
+    <li><a href="{{path}}">{{path}}</a></li>
     {% endfor %}
 </ul>

@@ -32,6 +32,21 @@ require('../data/require-data.json');
 
 All JSON data are parsed with [JSON5](http://json5.org/) package so you can use features like unquoted keys, strings can be single-quoted, objects and arrays can have trailing commas, comments.
 
+### Utils
+Util Object is injected into all templates.
+
+#### $.pages
+Type: `Array`
+
+List of all pages path.
+```html
+<ul>
+    {% for path in $.pages %}
+    <li><a href="{{path}}">{{path}}</a></li>
+    {% endfor %}
+</ul>
+```
+
 ## Getting Started
 This plugin requires Grunt.
 
@@ -110,6 +125,7 @@ grunt.initConfig({
 
 ## Release History
 * 2015-05-15    0.1.1   replace lodash dependency with lodash.merge
+* 2015-05-19    0.2.0   added util ($) object with prefilled $.pages Array to all templates, remove caching (for watchers)
 
 ---
 
