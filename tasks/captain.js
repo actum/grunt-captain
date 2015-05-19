@@ -1,7 +1,7 @@
 /*
  * grunt-captain
  *
- * Copyright (c) 2015 Jan Panschab
+ * Copyright (c) 2015 Actum
  * Licensed under the MIT license.
  */
 
@@ -21,25 +21,25 @@ module.exports = function(grunt) {
             data: {}
         });
 
-        var parseRequiredData = function(template, basedir) {
+        var parseRequiredJson = function(template, basedir) {
             var regex = /^(\s*require\(\'([\s\S]+?)\'\)\;\s*)/i;
             var match = regex.exec(template);
-            var data = {};
+            var model = {};
             var body = '';
 
             if (match && match.length) {
-                var dataPath = match[match.length - 1];
-                var normalizedDataPath = path.normalize(path.join(basedir, dataPath));
-                var dataString = grunt.file.read(normalizedDataPath);
+                var jsonPath = match[match.length - 1];
+                var normalizedJsonPath = path.normalize(path.join(basedir, jsonPath));
+                var modelString = grunt.file.read(normalizedJsonPath);
 
-                data = JSON5.parse(dataString);
+                model = JSON5.parse(modelString);
                 body = template.replace(match[0], '');
             } else {
                 body = template;
             }
 
             return {
-                data: data,
+                model: model,
                 body: body
             };
         };
@@ -47,11 +47,11 @@ module.exports = function(grunt) {
         var parseJsonFrontMatter = function(template) {
             var regex = /^(\s*\{\{\{([\s\S]+?)\}\}\}\s*)/i;
             var match = regex.exec(template);
-            var data = {};
+            var model = {};
             var body = '';
 
             if (match && match.length) {
-                var data = JSON5.parse('{' + match[match.length - 1].replace(/^\s+|\s+$/g, '') + '}'); // TODO remove replace
+                var model = JSON5.parse('{' + match[match.length - 1] + '}');
 
                 body = template.replace(match[0], '');
             } else {
@@ -59,22 +59,37 @@ module.exports = function(grunt) {
             }
 
             return {
-                data: data,
+                model: model,
                 body: body
             };
         };
+
+        var collectUtilData = function(files) {
+            var pages = [];
+            files.forEach(function(file) {
+                pages.push(file.dest.replace(file.orig.dest, ''));
+            });
+            return {
+                $: {
+                    pages: pages
+                }
+            };
+        };
+
+        var utilData = collectUtilData(this.files);
 
         this.files.forEach(function(file) {
             var filePath = file.src[0];
             var template = grunt.file.read(filePath);
             var basedir = path.dirname(filePath);
-            var out = parseRequiredData(template, basedir);
-            var out2 = parseJsonFrontMatter(out.body);
-            var data = merge({}, options.data, out.data, out2.data);
+            var requiredOut = parseRequiredJson(template, basedir);
+            var jfmOut = parseJsonFrontMatter(requiredOut.body);
+            var model = merge({}, options.data, utilData, requiredOut.model, jfmOut.model);
 
-            var tpl = swig.render(out2.body, {
+            var tpl = swig.render(jfmOut.body, {
                 filename: filePath,
-                locals: data
+                locals: model,
+                cache: false
             });
 
             grunt.file.write(file.dest, tpl);

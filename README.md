@@ -116,4 +116,4 @@ grunt.initConfig({
 Task submitted by [Jan Panschab](https://github.com/janpanschab)
 
 ## License
-Copyright (c) 2015 Jan Panschab. Licensed under the MIT license.
+Copyright (c) 2015 Actum. Licensed under the MIT license.
