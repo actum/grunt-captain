@@ -63,7 +63,7 @@ grunt.loadNpmTasks('grunt-captain');
 ```
 
 ## The "captain" task
-_Run this task with the `grunt catain` command._
+_Run this task with the `grunt captain` command._
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically) guide.
 
@@ -104,21 +104,23 @@ In this example, we set global data option `env.dev` for differences between pro
 ```js
 grunt.initConfig({
   captain: {
-    options: {
-      data: {
-          env: {
-              dev: true
+    compile: {
+        options: {
+          data: {
+              env: {
+                  dev: true
+              }
           }
-      }
-    },
-    files: [{
-      expand: true, // Enable dynamic expansion.
-      cwd: 'tpl/page/', // Src matches are relative to this path.
-      src: ['*.swig'], // Actual pattern(s) to match.
-      dest: 'www/', // Destination path prefix.
-      ext: '.html', // Dest filepaths will have this extension.
-      extDot: 'first' // Extensions in filenames begin after the first dot
-    }]
+        },
+        files: [{
+          expand: true, // Enable dynamic expansion.
+          cwd: 'tpl/page/', // Src matches are relative to this path.
+          src: ['*.swig'], // Actual pattern(s) to match.
+          dest: 'www/', // Destination path prefix.
+          ext: '.html', // Dest filepaths will have this extension.
+          extDot: 'first' // Extensions in filenames begin after the first dot
+        }]
+    }
   }
 })
 ```
