@@ -7,10 +7,7 @@
 
 'use strict';
 
-var path = require('path');
 var swig = require('swig');
-var JSON5 = require('json5');
-var merge = require('lodash.merge');
 
 module.exports = function(grunt) {
 
@@ -20,49 +17,6 @@ module.exports = function(grunt) {
         var options = this.options({
             data: {}
         });
-
-        var parseRequiredJson = function(template, basedir) {
-            var regex = /^(\s*require\(\'([\s\S]+?)\'\)\;\s*)/i;
-            var match = regex.exec(template);
-            var model = {};
-            var body = '';
-
-            if (match && match.length) {
-                var jsonPath = match[match.length - 1];
-                var normalizedJsonPath = path.normalize(path.join(basedir, jsonPath));
-                var modelString = grunt.file.read(normalizedJsonPath);
-
-                model = JSON5.parse(modelString);
-                body = template.replace(match[0], '');
-            } else {
-                body = template;
-            }
-
-            return {
-                model: model,
-                body: body
-            };
-        };
-
-        var parseJsonFrontMatter = function(template) {
-            var regex = /^(\s*\{\{\{([\s\S]+?)\}\}\}\s*)/i;
-            var match = regex.exec(template);
-            var model = {};
-            var body = '';
-
-            if (match && match.length) {
-                var model = JSON5.parse('{' + match[match.length - 1] + '}');
-
-                body = template.replace(match[0], '');
-            } else {
-                body = template;
-            }
-
-            return {
-                model: model,
-                body: body
-            };
-        };
 
         var collectUtilData = function(files) {
             var pages = [];
@@ -81,14 +35,11 @@ module.exports = function(grunt) {
         this.files.forEach(function(file) {
             var filePath = file.src[0];
             var template = grunt.file.read(filePath);
-            var basedir = path.dirname(filePath);
-            var requiredOut = parseRequiredJson(template, basedir);
-            var jfmOut = parseJsonFrontMatter(requiredOut.body);
-            var model = merge({}, options.data, utilData, requiredOut.model, jfmOut.model);
+            options.data.$ = utilData.$;
 
-            var tpl = swig.render(jfmOut.body, {
+            var tpl = swig.render(template, {
                 filename: filePath,
-                locals: model,
+                locals: options.data,
                 cache: false
             });
 

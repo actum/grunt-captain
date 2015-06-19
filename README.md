@@ -3,34 +3,21 @@
 > Static site generator for prototyping front-end projects
 
 ## How it works
-Captain uses [Swig](http://paularmstrong.github.io/swig/) as a template engine and adds some SSG functionality. You can pass data to the template directly from template with JSON front matter syntax or from global grunt config.
+Captain uses [Swig](http://paularmstrong.github.io/swig/) as a template engine and adds some SSG functionality. You can pass data to the template from global grunt config.
 
 ```html
-{{{
+{% set data = {
     title: 'Homepage',
     homepage: true
-}}}
+} %}
 
-<h1>{{ title }}</h1>
-{% if homepage %}
+<h1>{{ data.title }}</h1>
+{% if data.homepage %}
 <p>This is homepage</p>
 {% endif %}
 ```
 
 More about swig templates in [documentation](http://paularmstrong.github.io/swig/docs/).
-
-You can also import data from JSON file:
-
-```html
-require('../data/require-data.json');
-
-<h1>{{ title }}</h1>
-{% if homepage %}
-<p>This is homepage</p>
-{% endif %}
-```
-
-All JSON data are parsed with [JSON5](http://json5.org/) package so you can use features like unquoted keys, strings can be single-quoted, objects and arrays can have trailing commas, comments.
 
 ### Utils
 Util Object is injected into all templates.
