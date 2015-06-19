@@ -113,8 +113,9 @@ grunt.initConfig({
 ```
 
 ## Release History
-* 2015-05-15    0.1.1   replace lodash dependency with lodash.merge
+* 2015-06-19    1.0.0   Rewrite data parsing to swig internal `set` tag.
 * 2015-05-19    0.2.0   added util ($) object with prefilled $.pages Array to all templates, remove caching (for watchers)
+* 2015-05-15    0.1.1   replace lodash dependency with lodash.merge
 
 ---
 
