@@ -13,6 +13,8 @@ module.exports = function(grunt) {
 
     grunt.registerMultiTask('captain', 'Static site generator for prototyping front-end projects.', function() {
 
+        swig.setDefaults({ cache: false });
+
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             data: {}
@@ -39,8 +41,7 @@ module.exports = function(grunt) {
 
             var tpl = swig.render(template, {
                 filename: filePath,
-                locals: options.data,
-                cache: false
+                locals: options.data
             });
 
             grunt.file.write(file.dest, tpl);
